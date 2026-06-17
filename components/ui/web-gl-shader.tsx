@@ -48,8 +48,8 @@ export function WebGLShader({ className = "absolute top-0 left-0 w-full h-full b
     `
 
     r.scene    = new THREE.Scene()
-    r.renderer = new THREE.WebGLRenderer({ canvas })
-    r.renderer.setPixelRatio(window.devicePixelRatio)
+    r.renderer = new THREE.WebGLRenderer({ canvas, antialias: false })
+    r.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5))
     r.renderer.setClearColor(new THREE.Color(0x000000))
     r.camera   = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, -1)
 
