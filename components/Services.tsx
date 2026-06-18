@@ -15,7 +15,7 @@ const ICONS = [
 
 const SERVICES = [
   {
-    title: "Artificial Intelligence & Machine Learning Solutions",
+    title: "Artificial Intelligence & Machine Learning",
     desc: "Design and development of AI systems, intelligent automation, predictive analytics, AI assistants, computer vision, and data-driven decision systems.",
     img: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=700&q=85&fit=crop",
   },
@@ -30,12 +30,7 @@ const SERVICES = [
     img: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=700&q=85&fit=crop",
   },
   {
-    title: "Digital Transformation Consulting",
-    desc: "Helping organizations modernize operations through technology strategy, process automation, cloud adoption, and digital workflows.",
-    img: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=700&q=85&fit=crop",
-  },
-  {
-    title: "Government Technology (GovTech) Solutions",
+    title: "Government Technology Solutions",
     desc: "Development of e-government platforms, digital records management, citizen services, GIS systems, and public sector modernization solutions.",
     img: "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=700&q=85&fit=crop",
   },
@@ -58,11 +53,6 @@ const SERVICES = [
     title: "Technology Training & Workforce Development",
     desc: "Professional training, certification programs, technical bootcamps, cybersecurity education, AI training, and talent development through MGX Campus.",
     img: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=700&q=85&fit=crop",
-  },
-  {
-    title: "Data Analytics & Business Intelligence",
-    desc: "Data platforms, dashboards, reporting systems, analytics solutions, and decision-support tools for organizations.",
-    img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=700&q=85&fit=crop",
   },
 ]
 
@@ -112,7 +102,7 @@ function TypewriterH2({ text }: { text: string }) {
 export default function Services() {
   const isMobile = useIsMobile()
   const [hovered, setHovered] = useState<number | null>(null)
-  const px = isMobile ? "1rem" : "5rem"
+  const px = isMobile ? "1rem" : "9rem"
 
   return (
     <section id="services" style={{ fontFamily: FF, paddingTop: isMobile ? "4rem" : "7rem", paddingBottom: "2rem" }}>
@@ -151,8 +141,8 @@ export default function Services() {
       <div style={{
         padding: `2.5rem ${px}`,
         display: "grid",
-        gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(5, 1fr)",
-        gap: isMobile ? "0.6rem" : "0.8rem",
+        gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(4, 1fr)",
+        gap: isMobile ? "0.75rem" : "1.25rem",
         marginTop: "2rem",
       }}>
         {SERVICES.map((s, i) => (
@@ -164,7 +154,7 @@ export default function Services() {
               position: "relative", overflow: "hidden",
               borderRadius: isMobile ? 10 : 14,
               border: "none",
-              aspectRatio: "3 / 4",
+              aspectRatio: "4 / 5",
               cursor: "default",
               background: "#0a0c12",
             }}
