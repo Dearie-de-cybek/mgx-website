@@ -1,6 +1,5 @@
 "use client"
 
-import InkReveal from "@/components/ui/ink-reveal"
 import { useIsMobile } from "@/hooks/useIsMobile"
 
 const FF = "'Google Sans Flex','Google Sans',system-ui,sans-serif"
@@ -11,16 +10,26 @@ const PANELS = [
     headline:  "Transform at scale",
     sub:       "Migrate, automate, and digitalize your operations with platforms built for the most demanding enterprise environments.",
     cta:       "Talk to MGX",
-    secondary: false,
-    img:       "https://images.unsplash.com/photo-1497366216548-37526070297c?w=900&q=85&fit=crop",
+    // blue
+    tint:      "rgba(20,60,160,0.18)",
+    accent:    "rgba(96,165,250,0.8)",
+    btnBg:     "rgba(42,107,255,0.88)",
+    btnGlow:   "rgba(42,107,255,0.35)",
+    auraColor: "rgba(30,90,255,0.28)",
+    auraColor2:"rgba(50,120,255,0.15)",
   },
   {
     audience:  "MGX Campus",
     headline:  "Where talent meets technology",
     sub:       "A dedicated innovation hub for training, research, and technology incubation — building the next generation of digital leaders across Africa and beyond.",
     cta:       "Explore the campus",
-    secondary: true,
-    img:       "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=900&q=85&fit=crop",
+    // violet
+    tint:      "rgba(80,20,160,0.16)",
+    accent:    "rgba(192,132,252,0.8)",
+    btnBg:     "rgba(124,58,237,0.88)",
+    btnGlow:   "rgba(124,58,237,0.35)",
+    auraColor: "rgba(130,50,255,0.26)",
+    auraColor2:"rgba(180,80,255,0.14)",
   },
 ]
 
@@ -33,91 +42,95 @@ export default function Who() {
       style={{
         fontFamily: FF,
         display: "flex",
-        flexDirection: "row",
-        flexWrap: "wrap",
-        borderTop: "1px solid rgba(33,34,38,0.06)",
+        flexDirection: isMobile ? "column" : "row",
+        position: "relative",
+        background: isMobile ? "#0d0820" : "#04060f",
+        borderTop: "1px solid rgba(255,255,255,0.05)",
+        gap: isMobile ? "1rem" : 0,
       }}
     >
-      {PANELS.map((p) => (
+      <style>{`
+        @keyframes auroraA {
+          from { transform: translate(0,0) scale(1); }
+          to   { transform: translate(14%,20%) scale(1.2); }
+        }
+        @keyframes auroraB {
+          from { transform: translate(0,0) scale(1); }
+          to   { transform: translate(-10%,15%) scale(1.15); }
+        }
+        @keyframes auroraC {
+          from { transform: translate(0,0) scale(1); }
+          to   { transform: translate(8%,-18%) scale(0.88); }
+        }
+        @keyframes auroraD {
+          from { transform: translate(0,0) scale(1); }
+          to   { transform: translate(-12%,10%) scale(1.18); }
+        }
+      `}</style>
+
+      {PANELS.map((p, i) => (
         <div
           key={p.audience}
           style={{
             flex: "1 1 300px",
-            minHeight: isMobile ? "auto" : "72vh",
+            minHeight: isMobile ? 0 : "72vh",
             position: "relative",
             overflow: "hidden",
-            borderRight: "1px solid rgba(33,34,38,0.06)",
-            background: "#fff",
+            background: p.tint,
+            borderRight: !isMobile && i === 0 ? "1px solid rgba(255,255,255,0.07)" : "none",
           }}
         >
-          {/* Background image revealed by ink effect */}
-          <img
-            src={p.img}
-            alt={p.audience}
-            loading="lazy"
-            style={{
-              position: "absolute", inset: 0,
-              width: "100%", height: "100%",
-              objectFit: "cover",
-              display: "block",
-            }}
-          />
+          {/* Per-panel aurora */}
+          <div aria-hidden style={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
+            <div style={{
+              position: "absolute",
+              width: "80%", height: "80%",
+              top: "-20%", left: i === 0 ? "-10%" : "10%",
+              background: `radial-gradient(ellipse at center, ${p.auraColor} 0%, transparent 65%)`,
+              filter: "blur(70px)",
+              animation: i === 0 ? "auroraA 9s ease-in-out infinite alternate" : "auroraC 10s ease-in-out infinite alternate",
+            }} />
+            <div style={{
+              position: "absolute",
+              width: "65%", height: "65%",
+              bottom: "-15%", right: i === 0 ? "5%" : "-5%",
+              background: `radial-gradient(ellipse at center, ${p.auraColor2} 0%, transparent 68%)`,
+              filter: "blur(90px)",
+              animation: i === 0 ? "auroraB 12s ease-in-out infinite alternate" : "auroraD 13s ease-in-out infinite alternate",
+            }} />
+          </div>
 
-          {/* Subtle dark overlay so text stays legible once image shows */}
           <div style={{
-            position: "absolute", inset: 0,
-            background: "linear-gradient(to bottom, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.38) 100%)",
-            zIndex: 0,
-          }} />
-
-          {/* InkReveal — white mask that erases on hover to show image */}
-          {!isMobile && (
-            <InkReveal
-              maskColor={[255, 255, 255]}
-              brushSize={150}
-              lifetime={800}
-              stampStep={8}
-            />
-          )}
-
-          {/* Content — above canvas (zIndex 2) */}
-          <div style={{
-            position: "relative",
-            zIndex: 2,
-            padding: isMobile ? "3rem 1.5rem" : "5rem 4rem",
-            minHeight: isMobile ? "auto" : "72vh",
+            position: "relative", zIndex: 1,
+            padding: isMobile ? "3rem 1.75rem" : "5rem 4rem",
+            minHeight: isMobile ? 0 : "72vh",
             display: "grid",
             placeContent: "center",
             gap: "1rem",
             textAlign: "center",
           }}>
             <p style={{
-              fontSize: "0.8rem", fontWeight: 600,
-              letterSpacing: "0.1em", textTransform: "uppercase",
-              color: "#80868b", margin: 0,
-              transition: "color 0.3s ease",
+              fontSize: "0.75rem", fontWeight: 600,
+              letterSpacing: "0.12em", textTransform: "uppercase",
+              color: p.accent, margin: 0,
             }}>
               {p.audience}
             </p>
 
             <h3 style={{
               fontFamily: FF,
-              fontSize: "clamp(2rem, 3.5vw, 2.8rem)",
-              fontWeight: 400, lineHeight: 1.05,
-              color: "#121317", margin: "0.25rem 0 0",
-              transition: "color 0.3s ease",
+              fontSize: isMobile ? "clamp(1.8rem,7vw,2.4rem)" : "clamp(2rem,3.5vw,2.8rem)",
+              fontWeight: 400, lineHeight: 1.06,
+              color: "white", margin: "0.2rem 0 0",
+              letterSpacing: "-0.025em",
             }}>
-              {p.headline}<br />
-              <span style={{ color: "#80868b" }}>
-                {p.sub.split(" ")[0]} {p.sub.split(" ")[1]}
-              </span>
+              {p.headline}
             </h3>
 
             <p style={{
-              color: "#45474d", fontWeight: 300,
-              lineHeight: 1.5, maxWidth: "36ch",
-              margin: "0 auto", fontSize: "1em",
-              transition: "color 0.3s ease",
+              color: "rgba(255,255,255,0.92)", fontWeight: 300,
+              lineHeight: 1.65, maxWidth: "34ch",
+              margin: "0 auto", fontSize: "1rem",
             }}>
               {p.sub}
             </p>
@@ -126,24 +139,29 @@ export default function Who() {
               <button
                 style={{
                   fontFamily: FF,
-                  fontSize: "1em", fontWeight: 500,
-                  padding: "0.7em 1.8em",
+                  fontSize: "0.95rem", fontWeight: 500,
+                  padding: "0.72em 1.9em",
                   borderRadius: "999px",
                   cursor: "pointer",
-                  border: p.secondary ? "1px solid rgba(33,34,38,0.12)" : "none",
-                  background: p.secondary ? "rgba(183,191,217,0.1)" : "#121317",
-                  color: p.secondary ? "#121317" : "white",
-                  transition: "background 0.15s ease, transform 0.15s ease",
+                  border: "none",
+                  background: p.btnBg,
+                  color: "white",
+                  backdropFilter: "blur(16px)",
+                  WebkitBackdropFilter: "blur(16px)",
+                  boxShadow: `0 0 28px ${p.btnGlow}`,
+                  transition: "transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease",
                 }}
                 onMouseEnter={(e) => {
                   const el = e.currentTarget as HTMLElement
-                  el.style.transform = "translateY(-1px)"
-                  el.style.background = p.secondary ? "rgba(183,191,217,0.18)" : "#2f3034"
+                  el.style.transform = "translateY(-2px)"
+                  el.style.filter = "brightness(1.15)"
+                  el.style.boxShadow = `0 0 44px ${p.btnGlow}`
                 }}
                 onMouseLeave={(e) => {
                   const el = e.currentTarget as HTMLElement
                   el.style.transform = "translateY(0)"
-                  el.style.background = p.secondary ? "rgba(183,191,217,0.1)" : "#121317"
+                  el.style.filter = "brightness(1)"
+                  el.style.boxShadow = `0 0 28px ${p.btnGlow}`
                 }}
               >
                 {p.cta}

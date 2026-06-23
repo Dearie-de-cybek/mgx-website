@@ -75,6 +75,17 @@ export default function Products() {
       paddingBottom: isMobile ? "3rem" : "6rem",
       borderTop: "1px solid rgba(33,34,38,0.06)",
     }}>
+      <style>{`
+        @keyframes marquee {
+          from { transform: translateX(0); }
+          to   { transform: translateX(-33.333%); }
+        }
+        @keyframes pulseDot {
+          0%, 100% { box-shadow: 0 0 0 0 rgba(239,68,68,0.5); }
+          50%       { box-shadow: 0 0 0 6px rgba(239,68,68,0); }
+        }
+      `}</style>
+
       {/* Header */}
       <div style={{
         display: "flex",
@@ -111,6 +122,7 @@ export default function Products() {
         paddingBottom: "1rem",
         overflowX: "scroll",
         scrollSnapType: "x mandatory",
+        scrollPaddingLeft: px,
         scrollbarWidth: "none",
         overscrollBehaviorX: "contain",
       }}>
@@ -162,6 +174,8 @@ export default function Products() {
             </div>
           </div>
         ))}
+
+        <div style={{ minWidth: px, flexShrink: 0 }} />
       </div>
 
       {/* Controls — below carousel */}

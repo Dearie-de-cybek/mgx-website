@@ -73,6 +73,7 @@ export default function Blog() {
         display: "flex", gap: isMobile ? "0.9rem" : "1.25rem",
         paddingTop: "0.25rem", paddingBottom: "0.5rem",
         overflowX: "scroll", scrollSnapType: "x mandatory",
+        scrollPaddingLeft: px,
         scrollbarWidth: "none", overscrollBehaviorX: "contain",
       }}>
         <div style={{ minWidth: px, flexShrink: 0 }} />
@@ -109,6 +110,8 @@ export default function Blog() {
             </span>
           </a>
         ))}
+
+        <div style={{ minWidth: px, flexShrink: 0 }} />
       </div>
 
       {/* Controls */}

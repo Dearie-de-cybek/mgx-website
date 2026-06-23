@@ -6,7 +6,7 @@ import { useIsMobile } from "@/hooks/useIsMobile"
 
 const FF = "'Google Sans Flex','Google Sans',system-ui,sans-serif"
 const NAV_ITEMS = ["Products", "Solutions", "Research", "MGX Campus", "Company"]
-const FULL_TEXT = "Solving Real Human Problems\nWith Technology"
+const FULL_TEXT = "Solving Real Human \n Problems With Technology"
 const NL_IDX = FULL_TEXT.indexOf("\n")
 
 function ArrowIcon({ size = 15, color = "currentColor" }: { size?: number; color?: string }) {
@@ -327,7 +327,7 @@ export default function Hero() {
         {/* Typed headline */}
         <h1 style={{
           fontFamily: FF,
-          fontSize: isMobile ? "clamp(2.2rem,10vw,3.2rem)" : "clamp(3.5rem,7vw,6.7rem)",
+          fontSize: isMobile ? "clamp(2.2rem,10vw,3.2rem)" : "clamp(2.5rem,7vw,5.7rem)",
           fontWeight: 450,
           lineHeight: 1.06,
           letterSpacing: isMobile ? "-1.5px" : "-3.5px",
@@ -351,9 +351,9 @@ export default function Hero() {
 
         {/* Body */}
         <p style={{
-          fontSize: isMobile ? "0.95rem" : "17.5px",
+          fontSize: isMobile ? "1rem" : "17.5px",
           fontWeight: 400, lineHeight: 1.7,
-          color: "rgba(255,255,255,0.65)",
+          color: "rgba(255,255,255,0.9)",
           maxWidth: 520, margin: "0 auto",
           marginBottom: isMobile ? "2rem" : "3rem",
           opacity: showBody ? 1 : 0,
