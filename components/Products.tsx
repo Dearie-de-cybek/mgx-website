@@ -1,72 +1,20 @@
 "use client"
 
-import { useRef } from "react"
 import { useIsMobile } from "@/hooks/useIsMobile"
 
 const FF = "'Google Sans Flex','Google Sans',system-ui,sans-serif"
 
 const PRODUCTS = [
-  {
-    name: "H360", tagline: "Intelligent 360° Operations Hub",
-    desc: "A unified command centre that aggregates enterprise data, assets, and workflows into a single real-time operational view — giving leaders total situational awareness across every department.",
-    img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=85&fit=crop",
-  },
-  {
-    name: "GOVDIGI", tagline: "Government Digital Services Platform",
-    desc: "An end-to-end e-government suite enabling secure, accessible digital interactions between citizens and public institutions — deployable at national scale with full compliance built in.",
-    img: "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=800&q=85&fit=crop",
-  },
-  {
-    name: "TRUSTPORT IDENTITY", tagline: "Digital Identity & Trust Management",
-    desc: "A biometric-backed identity verification and credentialing system that secures access across enterprise and government ecosystems — from onboarding to continuous authentication.",
-    img: "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=800&q=85&fit=crop",
-  },
-  {
-    name: "E-TRACK", tagline: "Real-time Asset & Fleet Tracking",
-    desc: "Live telemetry and intelligent analytics for vehicles, field assets, and logistics operations — complete visibility at any scale, from dozens to millions of tracked units.",
-    img: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&q=85&fit=crop",
-  },
-  {
-    name: "NEARFENCE", tagline: "Geofencing & Location Intelligence",
-    desc: "Dynamic geofencing and proximity-based intelligence that automates location-triggered actions across retail, logistics, and smart-city applications with sub-metre precision.",
-    img: "https://images.unsplash.com/photo-1524661135-423995f22d0b?w=800&q=85&fit=crop",
-  },
+  { name: "H360",               tagline: "Intelligent 360° Operations Hub" },
+  { name: "GOVDIGI",            tagline: "Government Digital Services Platform" },
+  { name: "TRUSTPORT IDENTITY", tagline: "Digital Identity & Trust Management" },
+  { name: "E-TRACK",            tagline: "Real-time Asset & Fleet Tracking" },
+  { name: "NEARFENCE",          tagline: "Geofencing & Location Intelligence" },
 ]
 
-function ChevronLeft() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden>
-      <path d="M10 3L5 8l5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  )
-}
-function ChevronRight() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden>
-      <path d="M6 3l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  )
-}
-function ArrowRight() {
-  return (
-    <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden>
-      <path d="M2 6.5h9m0 0L7.5 3M11 6.5L7.5 10" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  )
-}
-
 export default function Products() {
-  const scrollRef = useRef<HTMLDivElement>(null)
-  const isMobile  = useIsMobile()
+  const isMobile = useIsMobile()
   const px = isMobile ? "1.5rem" : "7rem"
-
-  const scroll = (dir: "prev" | "next") => {
-    const el = scrollRef.current
-    if (!el) return
-    const card = el.querySelector<HTMLElement>("[data-product-card]")
-    const amount = (card?.offsetWidth ?? 300) + 20
-    el.scrollBy({ left: dir === "next" ? amount : -amount, behavior: "smooth" })
-  }
 
   return (
     <section id="products" style={{
@@ -94,7 +42,6 @@ export default function Products() {
         alignItems: isMobile ? "flex-start" : "flex-end",
         padding: `0 ${px}`,
         gap: isMobile ? "1rem" : "5rem",
-        marginBottom: isMobile ? "0" : "0",
       }}>
         <h2 style={{
           fontFamily: FF,
@@ -115,101 +62,120 @@ export default function Products() {
         )}
       </div>
 
-      {/* Carousel */}
-      <div ref={scrollRef} style={{
-        display: "flex", gap: "1rem",
-        paddingTop: isMobile ? "1.5rem" : "4rem",
-        paddingBottom: "1rem",
-        overflowX: "scroll",
-        scrollSnapType: "x mandatory",
-        scrollPaddingLeft: px,
-        scrollbarWidth: "none",
-        overscrollBehaviorX: "contain",
+      {/* Cinematic announcement */}
+      <div style={{
+        position: "relative",
+        overflow: "hidden",
+        background: "#020408",
+        marginTop: isMobile ? "2.5rem" : "4rem",
+        borderTop: "1px solid rgba(255,255,255,0.06)",
+        borderBottom: "1px solid rgba(255,255,255,0.06)",
       }}>
-        <div style={{ minWidth: px, flexShrink: 0 }} />
+        {/* Sphere stage */}
+        <div aria-hidden style={{
+          position: "relative",
+          height: isMobile ? 180 : 300,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "flex-end",
+          overflow: "hidden",
+        }}>
+          <div style={{
+            position: "absolute",
+            bottom: 0, left: "10%", right: "10%", height: "50%",
+            background: "radial-gradient(ellipse at center bottom, rgba(26,115,232,0.35) 0%, rgba(100,40,255,0.15) 45%, transparent 70%)",
+            filter: "blur(24px)",
+          }} />
+          <div style={{
+            position: "relative",
+            width: isMobile ? 300 : 520,
+            height: isMobile ? 300 : 520,
+            borderRadius: "50%",
+            flexShrink: 0,
+            marginBottom: isMobile ? -150 : -260,
+            background: "radial-gradient(ellipse at 50% 38%, #0d1428 0%, #040610 55%, #020408 100%)",
+            boxShadow: [
+              "0 -55px 130px rgba(26,115,232,0.8)",
+              "0 -25px 60px rgba(100,40,255,0.45)",
+              "0 0 0 1px rgba(26,115,232,0.12)",
+            ].join(","),
+          }}>
+            <div style={{
+              position: "absolute",
+              top: "6%", left: "14%", right: "14%", height: "26%",
+              background: "radial-gradient(ellipse at center, rgba(60,140,255,0.7) 0%, rgba(120,60,255,0.35) 50%, transparent 72%)",
+              filter: "blur(20px)",
+              borderRadius: "50%",
+            }} />
+            <div style={{
+              position: "absolute",
+              top: "10%", left: "30%", right: "30%", height: "14%",
+              background: "radial-gradient(ellipse, rgba(180,210,255,0.55) 0%, transparent 70%)",
+              filter: "blur(10px)",
+              borderRadius: "50%",
+            }} />
+          </div>
+        </div>
 
-        {PRODUCTS.map((p) => (
-          <div
-            key={p.name}
-            data-product-card
-            style={{
-              flex: `0 0 ${isMobile ? "min(82vw,300px)" : "min(68vw,520px)"}`,
-              scrollSnapAlign: "start",
-              borderRadius: isMobile ? 16 : 20,
-              overflow: "hidden",
-              background: "#fff",
-              border: "1px solid rgba(18,19,23,0.07)",
-              boxShadow: "0 2px 20px rgba(0,0,0,0.05),0 1px 4px rgba(0,0,0,0.03)",
-              display: "flex", flexDirection: "column",
+        {/* Text block */}
+        <div style={{
+          position: "relative", zIndex: 2,
+          textAlign: "center",
+          padding: isMobile ? "2rem 1.5rem 0" : "2.5rem 4rem 0",
+        }}>
+          <p style={{
+            fontFamily: FF, margin: "0 0 1.5rem",
+            fontSize: "0.68rem", fontWeight: 700,
+            letterSpacing: "0.22em", textTransform: "uppercase",
+            color: "rgba(80,150,255,0.75)",
+          }}>MGX Proprietary Platforms</p>
+
+          <h3 style={{
+            fontFamily: FF, margin: 0,
+            fontSize: isMobile ? "clamp(1.8rem,9vw,2.8rem)" : "clamp(3rem,5.5vw,5rem)",
+            fontWeight: 200,
+            letterSpacing: isMobile ? "0.2em" : "0.3em",
+            textTransform: "uppercase",
+            color: "white", lineHeight: 1,
+          }}>Coming Soon</h3>
+
+          <p style={{
+            fontFamily: FF,
+            margin: "1.5rem auto 2rem",
+            fontSize: "1rem", fontWeight: 300,
+            color: "rgba(255,255,255,0.45)",
+            maxWidth: 480, lineHeight: 1.7,
+          }}>
+            Five purpose-built platforms launching soon — redefining how enterprises and governments operate at scale.
+          </p>
+
+          <button style={{
+            fontFamily: FF,
+            padding: "0.8em 2.2em",
+            borderRadius: "999px",
+            background: "transparent",
+            border: "1px solid rgba(255,255,255,0.22)",
+            color: "white", fontSize: "0.95rem", fontWeight: 450,
+            cursor: "pointer", letterSpacing: "0.04em",
+            transition: "border-color 0.2s ease, background 0.2s ease",
+          }}
+            onMouseEnter={(e) => {
+              const el = e.currentTarget as HTMLElement
+              el.style.background = "rgba(255,255,255,0.08)"
+              el.style.borderColor = "rgba(255,255,255,0.45)"
+            }}
+            onMouseLeave={(e) => {
+              const el = e.currentTarget as HTMLElement
+              el.style.background = "transparent"
+              el.style.borderColor = "rgba(255,255,255,0.22)"
             }}
           >
-            <div style={{ height: isMobile ? 200 : 360, overflow: "hidden", background: "#f1f3f4", flexShrink: 0 }}>
-              <img src={p.img} alt={p.tagline} loading="lazy"
-                style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
-            </div>
-            <div style={{
-              padding: isMobile ? "1rem 1.1rem 1.25rem" : "1.75rem 2rem 2rem",
-              display: "flex", flexDirection: "column", gap: "0.45rem", flex: 1,
-            }}>
-              <span style={{ fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "#1a73e8" }}>
-                {p.name}
-              </span>
-              <h3 style={{ fontFamily: FF, fontSize: isMobile ? "0.95rem" : "1.2rem", fontWeight: 600, lineHeight: 1.2, color: "#121317", margin: 0, letterSpacing: "-0.02em" }}>
-                {p.tagline}
-              </h3>
-              <p style={{ fontWeight: 300, lineHeight: 1.6, color: "#45474d", fontSize: isMobile ? "0.82rem" : "0.9rem", margin: "0.15rem 0 0.75rem", flex: 1 }}>
-                {p.desc}
-              </p>
-              <a href="#" style={{
-                display: "inline-flex", alignItems: "center", gap: "0.4em",
-                color: "#121317", textDecoration: "none",
-                fontSize: "0.85rem", fontWeight: 550, letterSpacing: "-0.01em",
-                transition: "gap 0.18s ease", width: "fit-content",
-              }}
-                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.gap = "0.65em" }}
-                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.gap = "0.4em" }}
-              >
-                View product <ArrowRight />
-              </a>
-            </div>
-          </div>
-        ))}
+            Get Notified
+          </button>
+        </div>
 
-        <div style={{ minWidth: px, flexShrink: 0 }} />
-      </div>
-
-      {/* Controls — below carousel */}
-      <div style={{ padding: `1.5rem ${px} 0` }}>
-        <ControlsPill onScroll={scroll} />
+        <div style={{ paddingBottom: isMobile ? "2.5rem" : "3.5rem" }} />
       </div>
     </section>
-  )
-}
-
-function ControlsPill({ onScroll }: { onScroll: (dir: "prev" | "next") => void }) {
-  return (
-    <div style={{
-      display: "inline-flex", alignItems: "center",
-      background: "rgba(255,255,255,0.55)",
-      backdropFilter: "blur(24px)", WebkitBackdropFilter: "blur(24px)",
-      border: "1px solid rgba(18,19,23,0.09)",
-      boxShadow: "0 4px 24px rgba(0,0,0,0.07),inset 0 1px 0 rgba(255,255,255,0.9)",
-      borderRadius: "100px", overflow: "hidden",
-    }}>
-      {(["prev","next"] as const).map((dir) => (
-        <button key={dir} onClick={() => onScroll(dir)}
-          aria-label={dir === "prev" ? "Previous" : "Next"}
-          style={{
-            width: 48, height: 44, display: "flex", alignItems: "center", justifyContent: "center",
-            background: "transparent", border: "none", cursor: "pointer", color: "#121317",
-            transition: "background 0.15s ease",
-          }}
-          onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "rgba(18,19,23,0.05)" }}
-          onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "transparent" }}
-        >
-          {dir === "prev" ? <ChevronLeft /> : <ChevronRight />}
-        </button>
-      ))}
-    </div>
   )
 }

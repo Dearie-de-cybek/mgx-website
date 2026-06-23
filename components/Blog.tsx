@@ -70,39 +70,43 @@ export default function Blog() {
 
       {/* Carousel */}
       <div ref={scrollRef} style={{
-        display: "flex", gap: isMobile ? "0.9rem" : "1.25rem",
+        display: "flex", gap: 0,
         paddingTop: "0.25rem", paddingBottom: "0.5rem",
         overflowX: "scroll", scrollSnapType: "x mandatory",
         scrollPaddingLeft: px,
         scrollbarWidth: "none", overscrollBehaviorX: "contain",
+        borderTop: "1px solid rgba(33,34,38,0.08)",
+        borderBottom: "1px solid rgba(33,34,38,0.08)",
       }}>
         <div style={{ minWidth: px, flexShrink: 0 }} />
 
-        {POSTS.map((post) => (
+        {POSTS.map((post, i) => (
           <a key={post.title} href="#" data-blog-card style={{
             flex: `0 0 ${isMobile ? "min(78vw,280px)" : "min(62vw,360px)"}`,
             scrollSnapAlign: "start",
-            display: "flex", flexDirection: "column", gap: "0.75rem",
+            display: "flex", flexDirection: "column", gap: "1rem",
             textDecoration: "none", color: "inherit",
+            borderRight: "1px solid rgba(33,34,38,0.09)",
+            padding: isMobile ? "1.5rem 1.5rem 1.75rem" : "2rem 2.5rem 2.25rem",
           }}>
             <div style={{
-              width: "100%", height: isMobile ? 180 : 240,
-              borderRadius: isMobile ? 12 : 16, overflow: "hidden",
+              width: "100%", height: isMobile ? 300 : 420,
+              borderRadius: isMobile ? 10 : 12, overflow: "hidden",
               background: "#f1f3f4", flexShrink: 0,
             }}>
               <img src={post.img} alt={post.title} loading="lazy" style={{
                 width: "100%", height: "100%", objectFit: "cover", display: "block",
-                transition: "transform 0.4s ease",
+                transition: "transform 0.45s ease",
               }}
-                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.transform = "scale(1.04)" }}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.transform = "scale(1.05)" }}
                 onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.transform = "scale(1)" }}
               />
             </div>
-            <h3 style={{ fontFamily: FF, fontSize: isMobile ? "0.88rem" : "1rem", fontWeight: 550, lineHeight: 1.35, color: "#121317", margin: 0, letterSpacing: "-0.01em" }}>
+            <h3 style={{ fontFamily: FF, fontSize: isMobile ? "1rem" : "1.1rem", fontWeight: 550, lineHeight: 1.35, color: "#121317", margin: 0, letterSpacing: "-0.015em" }}>
               {post.title}
             </h3>
-            <p style={{ fontSize: "0.78rem", fontWeight: 400, color: "#80868b", margin: 0 }}>{post.date}</p>
-            <span style={{ display: "inline-flex", alignItems: "center", gap: "0.35em", fontSize: "0.85rem", fontWeight: 500, color: "#121317" }}>
+            <p style={{ fontSize: "0.88rem", fontWeight: 400, color: "#80868b", margin: 0 }}>{post.date}</p>
+            <span style={{ display: "inline-flex", alignItems: "center", gap: "0.4em", fontSize: "0.95rem", fontWeight: 500, color: "#121317", marginTop: "auto" }}>
               Read blog
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden>
                 <path d="M2 6h8m0 0L7 3m3 3L7 9" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>

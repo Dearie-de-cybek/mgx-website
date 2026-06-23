@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { WebGLShader } from "@/components/ui/web-gl-shader"
 import { useIsMobile } from "@/hooks/useIsMobile"
 
@@ -8,6 +8,54 @@ const FF = "'Google Sans Flex','Google Sans',system-ui,sans-serif"
 const NAV_ITEMS = ["Products", "Solutions", "Research", "MGX Campus", "Company"]
 const FULL_TEXT = "Solving Real Human \n Problems With Technology"
 const NL_IDX = FULL_TEXT.indexOf("\n")
+
+const NAV_DROPDOWNS: Record<string, { desc: string; items: { name: string; sub: string }[] }> = {
+  Products: {
+    desc: "Five purpose-built software platforms for enterprise and government.",
+    items: [
+      { name: "H360",       sub: "Intelligent Operations Hub" },
+      { name: "GOVDIGI",    sub: "Government Digital Services" },
+      { name: "TRUSTPORT",  sub: "Digital Identity & Trust" },
+      { name: "E-TRACK",    sub: "Asset & Fleet Tracking" },
+      { name: "NEARFENCE",  sub: "Geofencing Intelligence" },
+    ],
+  },
+  Solutions: {
+    desc: "End-to-end technology solutions tailored to your sector.",
+    items: [
+      { name: "Enterprise",   sub: "Digital transformation at scale" },
+      { name: "Government",   sub: "Public sector modernization" },
+      { name: "Healthcare",   sub: "Health technology platforms" },
+      { name: "Smart Cities", sub: "Urban intelligence systems" },
+    ],
+  },
+  Research: {
+    desc: "Innovation-driven research powering tomorrow's solutions.",
+    items: [
+      { name: "Innovation Lab",   sub: "R&D and rapid prototyping" },
+      { name: "Publications",     sub: "White papers & reports" },
+      { name: "R&D Partnerships", sub: "Academic and industry" },
+    ],
+  },
+  "MGX Campus": {
+    desc: "Building Africa's next generation of digital leaders.",
+    items: [
+      { name: "Training Programs", sub: "Professional development" },
+      { name: "Bootcamps",         sub: "Intensive skill-building" },
+      { name: "Certifications",    sub: "Industry credentials" },
+      { name: "Innovation Hub",    sub: "Incubation & mentorship" },
+    ],
+  },
+  Company: {
+    desc: "Learn about our story, team, and mission.",
+    items: [
+      { name: "About MGX",    sub: "Our story and vision" },
+      { name: "Team",         sub: "The people behind MGX" },
+      { name: "Careers",      sub: "Join our growing team" },
+      { name: "News & Press", sub: "Latest announcements" },
+    ],
+  },
+}
 
 function ArrowIcon({ size = 15, color = "currentColor" }: { size?: number; color?: string }) {
   return (
@@ -41,7 +89,6 @@ function LogoMark({ dark = false }) {
   )
 }
 
-// Hamburger ↔ X button with circular background
 function MenuButton({ open, onClick }: { open: boolean; onClick: () => void }) {
   return (
     <button
@@ -57,7 +104,6 @@ function MenuButton({ open, onClick }: { open: boolean; onClick: () => void }) {
         transition: "background 0.2s ease",
       }}
     >
-      {/* 3 bars */}
       <div style={{
         position: "absolute", inset: 0,
         display: "flex", flexDirection: "column",
@@ -66,14 +112,10 @@ function MenuButton({ open, onClick }: { open: boolean; onClick: () => void }) {
         transform: open ? "rotate(-90deg) scale(0.7)" : "none",
         transition: "opacity 0.22s ease, transform 0.22s ease",
       }}>
-        {[0,1,2].map(i => (
-          <div key={i} style={{
-            width: 18, height: 1.6,
-            background: "white", borderRadius: 1,
-          }} />
+        {[0, 1, 2].map(i => (
+          <div key={i} style={{ width: 18, height: 1.6, background: "white", borderRadius: 1 }} />
         ))}
       </div>
-      {/* X */}
       <div style={{
         position: "absolute", inset: 0,
         display: "flex", alignItems: "center", justifyContent: "center",
@@ -96,10 +138,18 @@ export default function Hero() {
   const [eyebrowVisible, setEyebrowVisible] = useState(false)
   const [showBody,       setShowBody]       = useState(false)
   const [showButtons,    setShowButtons]    = useState(false)
+  const [openDropdown,   setOpenDropdown]   = useState<string | null>(null)
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
-  // close menu on resize to desktop
+  const openDD = (item: string) => {
+    if (closeTimer.current) clearTimeout(closeTimer.current)
+    if (NAV_DROPDOWNS[item]) setOpenDropdown(item)
+  }
+  const closeDD = () => {
+    closeTimer.current = setTimeout(() => setOpenDropdown(null), 90)
+  }
+
   useEffect(() => { if (!isMobile) setMenuOpen(false) }, [isMobile])
-  // prevent scroll when menu open
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : ""
     return () => { document.body.style.overflow = "" }
@@ -107,6 +157,7 @@ export default function Hero() {
 
   const scrollTo = (id: string) => {
     setMenuOpen(false)
+    setOpenDropdown(null)
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" })
   }
 
@@ -138,7 +189,14 @@ export default function Hero() {
       className="relative min-h-screen overflow-hidden"
       style={{ fontFamily: FF, background: "#000" }}
     >
-      {/* ── WebGL wave background ── */}
+      <style>{`
+        @keyframes ddFadeIn {
+          from { opacity: 0; transform: translateY(-10px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
+
+      {/* WebGL wave background */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden>
         <WebGLShader />
         <div style={{
@@ -152,7 +210,7 @@ export default function Hero() {
         }} />
       </div>
 
-      {/* ══ NAV ═══════════════════════════════════════════════════════════════ */}
+      {/* NAV */}
       <nav style={{
         position: "absolute", top: 0, left: 0, right: 0, zIndex: 20,
         display: "flex", alignItems: "center", justifyContent: "space-between",
@@ -172,19 +230,36 @@ export default function Hero() {
           <span style={{ fontWeight: 650, color: "white" }}>GX</span>
         </button>
 
-        {/* Desktop nav */}
+        {/* Desktop nav items */}
         {!isMobile && (
           <ul className="flex items-center gap-0.5 list-none m-0 p-0">
             {NAV_ITEMS.map((item) => (
-              <li key={item}>
+              <li key={item}
+                onMouseEnter={() => openDD(item)}
+                onMouseLeave={closeDD}
+              >
                 <button
                   onClick={() => scrollTo(item.toLowerCase().replace(/\s+/g, "-"))}
                   className="px-3 py-1.5 rounded-lg cursor-pointer transition-colors duration-150"
-                  style={{ fontSize: 14, fontWeight: 450, color: "rgba(255,255,255,0.6)" }}
-                  onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "white")}
-                  onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.6)")}
+                  style={{
+                    fontSize: 14, fontWeight: 450,
+                    color: openDropdown === item ? "white" : "rgba(255,255,255,0.88)",
+                    display: "inline-flex", alignItems: "center", gap: "0.3rem",
+                  }}
                 >
                   {item}
+                  {NAV_DROPDOWNS[item] && (
+                    <svg
+                      width="9" height="9" viewBox="0 0 9 9" fill="none" aria-hidden
+                      style={{
+                        opacity: 0.5,
+                        transition: "transform 0.2s ease",
+                        transform: openDropdown === item ? "rotate(180deg)" : "none",
+                      }}
+                    >
+                      <path d="M1.5 3L4.5 6.5L7.5 3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  )}
                 </button>
               </li>
             ))}
@@ -197,9 +272,9 @@ export default function Hero() {
             <button
               onClick={() => scrollTo("contact")}
               className="px-4 py-2 rounded-xl cursor-pointer transition-colors duration-150"
-              style={{ fontSize: 14, fontWeight: 450, color: "rgba(255,255,255,0.6)" }}
+              style={{ fontSize: 14, fontWeight: 450, color: "rgba(255,255,255,0.88)" }}
               onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "white")}
-              onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.6)")}
+              onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.88)")}
             >
               Contact Us
             </button>
@@ -222,9 +297,101 @@ export default function Hero() {
 
         {/* Mobile hamburger */}
         {isMobile && <MenuButton open={menuOpen} onClick={() => setMenuOpen(o => !o)} />}
+
+        {/* Dropdown panel — anchored to nav bottom */}
+        {!isMobile && openDropdown && NAV_DROPDOWNS[openDropdown] && (
+          <div
+            onMouseEnter={() => { if (closeTimer.current) clearTimeout(closeTimer.current) }}
+            onMouseLeave={closeDD}
+            style={{
+              position: "absolute",
+              top: "100%",
+              left: 0, right: 0,
+              paddingTop: "0.5rem",
+              display: "flex",
+              justifyContent: "center",
+              zIndex: 200,
+              pointerEvents: "auto",
+            }}
+          >
+            <div style={{
+              background: "rgba(8,10,16,0.97)",
+              backdropFilter: "blur(48px)",
+              WebkitBackdropFilter: "blur(48px)",
+              border: "1px solid rgba(255,255,255,0.1)",
+              borderRadius: 20,
+              padding: "2rem 2.25rem",
+              maxWidth: 700, width: "calc(100% - 10rem)",
+              boxShadow: "0 28px 90px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04)",
+              display: "grid",
+              gridTemplateColumns: "1fr 1.7fr",
+              gap: "2.25rem",
+              animation: "ddFadeIn 0.18s ease forwards",
+            }}>
+              {/* Left: label + description */}
+              <div style={{
+                display: "flex", flexDirection: "column", gap: "0.6rem",
+                borderRight: "1px solid rgba(255,255,255,0.08)",
+                paddingRight: "2.25rem",
+                justifyContent: "center",
+              }}>
+                <span style={{
+                  fontFamily: FF, fontSize: "0.63rem", fontWeight: 700,
+                  letterSpacing: "0.17em", textTransform: "uppercase",
+                  color: "rgba(255,255,255,0.28)",
+                }}>
+                  {openDropdown}
+                </span>
+                <p style={{
+                  fontFamily: FF, fontSize: "0.92rem", fontWeight: 300,
+                  color: "rgba(255,255,255,0.5)", lineHeight: 1.75,
+                  margin: 0,
+                }}>
+                  {NAV_DROPDOWNS[openDropdown].desc}
+                </p>
+              </div>
+
+              {/* Right: items grid */}
+              <div style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: "0.2rem 0.75rem",
+                alignContent: "start",
+              }}>
+                {NAV_DROPDOWNS[openDropdown].items.map((link) => (
+                  <button
+                    key={link.name}
+                    style={{
+                      display: "flex", flexDirection: "column", gap: "0.22rem",
+                      textAlign: "left", padding: "0.65rem 0.8rem",
+                      borderRadius: 11, cursor: "pointer",
+                      background: "transparent", border: "none",
+                      transition: "background 0.14s ease",
+                    }}
+                    onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.07)" }}
+                    onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "transparent" }}
+                  >
+                    <span style={{
+                      fontFamily: FF, fontSize: "0.875rem", fontWeight: 550,
+                      color: "rgba(255,255,255,0.92)", letterSpacing: "-0.01em",
+                    }}>
+                      {link.name}
+                    </span>
+                    <span style={{
+                      fontFamily: FF, fontSize: "0.77rem", fontWeight: 350,
+                      color: "rgba(255,255,255,0.38)", lineHeight: 1.4,
+                    }}>
+                      {link.sub}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
       </nav>
 
-      {/* ══ MOBILE FULL-SCREEN MENU ══════════════════════════════════════════ */}
+      {/* MOBILE FULL-SCREEN MENU */}
       <div style={{
         position: "fixed", inset: 0, zIndex: 50,
         background: "#000",
@@ -234,7 +401,6 @@ export default function Hero() {
         transition: "opacity 0.25s ease",
         fontFamily: FF,
       }}>
-        {/* Menu header */}
         <div style={{
           display: "flex", alignItems: "center", justifyContent: "space-between",
           padding: "0 1.25rem", height: 68, flexShrink: 0,
@@ -254,7 +420,6 @@ export default function Hero() {
           <MenuButton open={menuOpen} onClick={() => setMenuOpen(false)} />
         </div>
 
-        {/* Nav items with line separators */}
         <nav style={{ flex: 1, padding: "0.5rem 1.25rem", overflowY: "auto" }}>
           {NAV_ITEMS.map((item) => (
             <div key={item} style={{ borderBottom: "1px solid rgba(255,255,255,0.07)" }}>
@@ -274,7 +439,6 @@ export default function Hero() {
           ))}
         </nav>
 
-        {/* Bottom CTAs */}
         <div style={{ padding: "1.5rem 1.25rem", display: "flex", flexDirection: "column", gap: "0.6rem" }}>
           <button
             onClick={() => scrollTo("services")}
@@ -302,7 +466,7 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* ══ HERO CONTENT ════════════════════════════════════════════════════ */}
+      {/* HERO CONTENT */}
       <div style={{
         position: "relative", zIndex: 10,
         minHeight: "100svh",

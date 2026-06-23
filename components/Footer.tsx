@@ -7,7 +7,7 @@ const FF = "'Google Sans Flex','Google Sans',system-ui,sans-serif"
 
 const COLS = [
   { heading: "Services", links: ["AI & Machine Learning","Cybersecurity","Software Development","GovTech Solutions","Smart Cities"] },
-  { heading: "Products", links: ["H360","GOVDIGI","TRUSTPORT IDENTITY","E-TRACK","NEARFENCE"] },
+  { heading: "Products", links: ["H360 (Coming-soon)","GOVDIGI (Coming-soon)","TRUSTPORT IDENTITY (Coming-soon)","E-TRACK (Coming-soon)","NEARFENCE (Coming-soon)"] },
   { heading: "Company",  links: ["About MGX","Blog","Careers","Contact","Partners"] },
 ]
 

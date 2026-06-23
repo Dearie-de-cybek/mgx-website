@@ -53,7 +53,7 @@ export default function BeforeYouGo() {
   const isMobile = useIsMobile()
 
   return (
-    <section id="beforeyougo" style={{ fontFamily: FF, padding: isMobile ? "1.5rem" : "3rem", borderTop: "1px solid rgba(33,34,38,0.06)" }}>
+    <section id="beforeyougo" style={{ fontFamily: FF, background: "#000", padding: isMobile ? "1.5rem" : "3rem", borderTop: "1px solid rgba(33,34,38,0.06)" }}>
       <div ref={cardRef} style={{
         background: "#000",
         borderRadius: isMobile ? "1.25em" : "2em",
@@ -71,7 +71,7 @@ export default function BeforeYouGo() {
         }}>
           <TypewriterText text="Ready to transform your organization with MGX?" />
 
-          <p style={{ color: "rgba(255,255,255,0.42)", fontWeight: 300, lineHeight: 1.6, fontSize: isMobile ? "0.9rem" : "1.05em", margin: 0 }}>
+          <p style={{ color: "rgba(255,255,255,0.75)", fontWeight: 300, lineHeight: 1.6, fontSize: isMobile ? "1rem" : "1.05em", margin: 0 }}>
             Talk to our team about your technology challenges. We build systems
             that last — at enterprise scale, with government trust.
           </p>
@@ -106,9 +106,12 @@ export default function BeforeYouGo() {
           </div>
         </div>
 
-        {/* Right: sphere — hidden on very small screens to save perf */}
+        {/* Right: sphere */}
         {!isMobile && (
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", position: "relative" }}>
+          <div style={{
+            display: "flex", alignItems: "center", justifyContent: "center",
+            position: "relative", background: "#000", overflow: "hidden",
+          }}>
             <DitheringShader
               shape="sphere" type="random"
               colorBack="#000000" colorFront="#1a73e8"
