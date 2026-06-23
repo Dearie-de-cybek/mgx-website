@@ -591,7 +591,7 @@ export default function Hero() {
           aria-hidden
         >
           <div className="w-px h-9" style={{ background: "linear-gradient(to bottom,transparent,rgba(255,255,255,0.25))" }} />
-          <div className="w-[7px] h-[7px] rotate-45" style={{
+          <div className="w-1.75 h-1.75 rotate-45" style={{
             borderRight: "1px solid rgba(255,255,255,0.3)",
             borderBottom: "1px solid rgba(255,255,255,0.3)",
           }} />
