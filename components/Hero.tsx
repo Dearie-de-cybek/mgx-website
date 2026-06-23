@@ -6,7 +6,7 @@ import { useIsMobile } from "@/hooks/useIsMobile"
 
 const FF = "'Google Sans Flex','Google Sans',system-ui,sans-serif"
 const NAV_ITEMS = ["Products", "Solutions", "Research", "MGX Campus", "Company"]
-const FULL_TEXT = "Building the Future Through\nTechnology and Innovation"
+const FULL_TEXT = "Solving Real Human Problems\nWith Technology"
 const NL_IDX = FULL_TEXT.indexOf("\n")
 
 function ArrowIcon({ size = 15, color = "currentColor" }: { size?: number; color?: string }) {
