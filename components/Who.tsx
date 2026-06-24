@@ -10,26 +10,26 @@ const PANELS = [
     headline:  "Transform at scale",
     sub:       "Migrate, automate, and digitalize your operations with platforms built for the most demanding enterprise environments.",
     cta:       "Talk to MGX",
-    // blue
-    tint:      "rgba(20,60,160,0.18)",
-    accent:    "rgba(96,165,250,0.8)",
-    btnBg:     "rgba(42,107,255,0.88)",
-    btnGlow:   "rgba(42,107,255,0.35)",
-    auraColor: "rgba(30,90,255,0.28)",
-    auraColor2:"rgba(50,120,255,0.15)",
+    accent:    "#1a73e8",
+    accentText:"rgba(26,115,232,0.9)",
+    btnBg:     "#1a73e8",
+    btnGlow:   "rgba(26,115,232,0.28)",
+    border:    "rgba(26,115,232,0.18)",
+    aura1:     "rgba(26,115,232,0.12)",
+    aura2:     "rgba(100,160,255,0.1)",
   },
   {
     audience:  "MGX Campus",
     headline:  "Where talent meets technology",
     sub:       "A dedicated innovation hub for training, research, and technology incubation — building the next generation of digital leaders across Africa and beyond.",
     cta:       "Explore the campus",
-    // violet
-    tint:      "rgba(80,20,160,0.16)",
-    accent:    "rgba(192,132,252,0.8)",
-    btnBg:     "rgba(124,58,237,0.88)",
-    btnGlow:   "rgba(124,58,237,0.35)",
-    auraColor: "rgba(130,50,255,0.26)",
-    auraColor2:"rgba(180,80,255,0.14)",
+    accent:    "#7c3aed",
+    accentText:"rgba(124,58,237,0.9)",
+    btnBg:     "#7c3aed",
+    btnGlow:   "rgba(124,58,237,0.28)",
+    border:    "rgba(124,58,237,0.18)",
+    aura1:     "rgba(124,58,237,0.11)",
+    aura2:     "rgba(192,132,252,0.09)",
   },
 ]
 
@@ -41,12 +41,8 @@ export default function Who() {
       id="who"
       style={{
         fontFamily: FF,
-        display: "flex",
-        flexDirection: isMobile ? "column" : "row",
-        position: "relative",
-        background: isMobile ? "#0d0820" : "#04060f",
-        borderTop: "1px solid rgba(255,255,255,0.05)",
-        gap: isMobile ? "1rem" : 0,
+        background: "transparent",
+        padding: isMobile ? "3rem 1.25rem" : "5rem 4rem",
       }}
     >
       <style>{`
@@ -68,108 +64,117 @@ export default function Who() {
         }
       `}</style>
 
-      {PANELS.map((p, i) => (
-        <div
-          key={p.audience}
-          style={{
-            flex: "1 1 300px",
-            minHeight: isMobile ? 0 : "72vh",
-            position: "relative",
-            overflow: "hidden",
-            background: p.tint,
-            borderRight: !isMobile && i === 0 ? "1px solid rgba(255,255,255,0.07)" : "none",
-          }}
-        >
-          {/* Per-panel aurora */}
-          <div aria-hidden style={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
-            <div style={{
-              position: "absolute",
-              width: "80%", height: "80%",
-              top: "-20%", left: i === 0 ? "-10%" : "10%",
-              background: `radial-gradient(ellipse at center, ${p.auraColor} 0%, transparent 65%)`,
-              filter: "blur(70px)",
-              animation: i === 0 ? "auroraA 9s ease-in-out infinite alternate" : "auroraC 10s ease-in-out infinite alternate",
-            }} />
-            <div style={{
-              position: "absolute",
-              width: "65%", height: "65%",
-              bottom: "-15%", right: i === 0 ? "5%" : "-5%",
-              background: `radial-gradient(ellipse at center, ${p.auraColor2} 0%, transparent 68%)`,
-              filter: "blur(90px)",
-              animation: i === 0 ? "auroraB 12s ease-in-out infinite alternate" : "auroraD 13s ease-in-out infinite alternate",
-            }} />
-          </div>
+      <div style={{
+        display: "flex",
+        flexDirection: isMobile ? "column" : "row",
+        gap: isMobile ? "1.5rem" : "2rem",
+        maxWidth: 1200,
+        margin: "0 auto",
+      }}>
+        {PANELS.map((p, i) => (
+          <div
+            key={p.audience}
+            style={{
+              flex: "1 1 0",
+              position: "relative",
+              overflow: "hidden",
+              borderRadius: isMobile ? "1.25rem" : "1.75rem",
+              border: `1px solid ${p.border}`,
+              background: "#ffffff",
+              minHeight: isMobile ? 520 : 780,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              padding: isMobile ? "2.5rem 1.75rem" : "3.5rem 3rem",
+              boxShadow: `0 2px 32px ${p.aura1}`,
+              boxSizing: "border-box",
+            }}
+          >
+            {/* Aurora beams */}
+            <div aria-hidden style={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
+              <div style={{
+                position: "absolute",
+                width: "90%", height: "70%",
+                top: "-10%", left: i === 0 ? "-15%" : "10%",
+                background: `radial-gradient(ellipse at center, ${p.aura1} 0%, transparent 65%)`,
+                filter: "blur(60px)",
+                animation: i === 0 ? "auroraA 9s ease-in-out infinite alternate" : "auroraC 10s ease-in-out infinite alternate",
+              }} />
+              <div style={{
+                position: "absolute",
+                width: "70%", height: "60%",
+                bottom: "-10%", right: i === 0 ? "0%" : "-10%",
+                background: `radial-gradient(ellipse at center, ${p.aura2} 0%, transparent 68%)`,
+                filter: "blur(80px)",
+                animation: i === 0 ? "auroraB 12s ease-in-out infinite alternate" : "auroraD 13s ease-in-out infinite alternate",
+              }} />
+            </div>
 
-          <div style={{
-            position: "relative", zIndex: 1,
-            padding: isMobile ? "3rem 1.75rem" : "5rem 4rem",
-            minHeight: isMobile ? 0 : "72vh",
-            display: "grid",
-            placeContent: "center",
-            gap: "1rem",
-            textAlign: "center",
-          }}>
-            <p style={{
-              fontSize: "0.75rem", fontWeight: 600,
-              letterSpacing: "0.12em", textTransform: "uppercase",
-              color: p.accent, margin: 0,
-            }}>
-              {p.audience}
-            </p>
+            {/* Top: label + headline */}
+            <div style={{ position: "relative", zIndex: 1 }}>
+              <p style={{
+                fontSize: "0.72rem", fontWeight: 700,
+                letterSpacing: "0.14em", textTransform: "uppercase",
+                color: p.accentText, margin: "0 0 1rem",
+              }}>
+                {p.audience}
+              </p>
 
-            <h3 style={{
-              fontFamily: FF,
-              fontSize: isMobile ? "clamp(1.8rem,7vw,2.4rem)" : "clamp(2rem,3.5vw,2.8rem)",
-              fontWeight: 400, lineHeight: 1.06,
-              color: "white", margin: "0.2rem 0 0",
-              letterSpacing: "-0.025em",
-            }}>
-              {p.headline}
-            </h3>
+              <h3 style={{
+                fontFamily: FF,
+                fontSize: isMobile ? "clamp(1.8rem,7vw,2.6rem)" : "clamp(2rem,3.2vw,3rem)",
+                fontWeight: 450, lineHeight: 1.08,
+                color: "#121317", margin: 0,
+                letterSpacing: "-0.03em",
+              }}>
+                {p.headline}
+              </h3>
+            </div>
 
-            <p style={{
-              color: "rgba(255,255,255,0.92)", fontWeight: 300,
-              lineHeight: 1.65, maxWidth: "34ch",
-              margin: "0 auto", fontSize: "1rem",
-            }}>
-              {p.sub}
-            </p>
+            {/* Bottom: sub text + button */}
+            <div style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+              <p style={{
+                color: "#5f6368", fontWeight: 350,
+                lineHeight: 1.7, fontSize: "1rem",
+                margin: 0,
+              }}>
+                {p.sub}
+              </p>
 
-            <div style={{ marginTop: "0.5rem" }}>
-              <button
-                style={{
-                  fontFamily: FF,
-                  fontSize: "0.95rem", fontWeight: 500,
-                  padding: "0.72em 1.9em",
-                  borderRadius: "999px",
-                  cursor: "pointer",
-                  border: "none",
-                  background: p.btnBg,
-                  color: "white",
-                  backdropFilter: "blur(16px)",
-                  WebkitBackdropFilter: "blur(16px)",
-                  boxShadow: `0 0 28px ${p.btnGlow}`,
-                  transition: "transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease",
-                }}
-                onMouseEnter={(e) => {
-                  const el = e.currentTarget as HTMLElement
-                  el.style.transform = "translateY(-2px)"
-                  el.style.filter = "brightness(1.15)"
-                  el.style.boxShadow = `0 0 44px ${p.btnGlow}`
-                }}
-                onMouseLeave={(e) => {
-                  const el = e.currentTarget as HTMLElement
-                  el.style.transform = "translateY(0)"
-                  el.style.filter = "brightness(1)"
-                  el.style.boxShadow = `0 0 28px ${p.btnGlow}`
-                }}
-              >
-                {p.cta}
-              </button>
+              <div>
+                <button
+                  style={{
+                    fontFamily: FF,
+                    fontSize: "0.95rem", fontWeight: 500,
+                    padding: "0.75em 2em",
+                    borderRadius: "999px",
+                    cursor: "pointer",
+                    border: "none",
+                    background: p.btnBg,
+                    color: "white",
+                    boxShadow: `0 4px 20px ${p.btnGlow}`,
+                    transition: "transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease",
+                  }}
+                  onMouseEnter={(e) => {
+                    const el = e.currentTarget as HTMLElement
+                    el.style.transform = "translateY(-2px)"
+                    el.style.filter = "brightness(1.1)"
+                    el.style.boxShadow = `0 8px 32px ${p.btnGlow}`
+                  }}
+                  onMouseLeave={(e) => {
+                    const el = e.currentTarget as HTMLElement
+                    el.style.transform = "translateY(0)"
+                    el.style.filter = "brightness(1)"
+                    el.style.boxShadow = `0 4px 20px ${p.btnGlow}`
+                  }}
+                >
+                  {p.cta}
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </section>
   )
 }

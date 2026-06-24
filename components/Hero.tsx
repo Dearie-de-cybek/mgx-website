@@ -6,10 +6,10 @@ import { useIsMobile } from "@/hooks/useIsMobile"
 
 const FF = "'Google Sans Flex','Google Sans',system-ui,sans-serif"
 const NAV_ITEMS = ["Products", "Solutions", "Research", "MGX Campus", "Company"]
-const FULL_TEXT = "Solving Real Human \n Problems With Technology"
+const FULL_TEXT = "Solving Real Human\nProblems With Technology"
 const NL_IDX = FULL_TEXT.indexOf("\n")
 
-const NAV_DROPDOWNS: Record<string, { desc: string; items: { name: string; sub: string }[] }> = {
+const NAV_DROPDOWNS: Record<string, { desc: string; items: { name: string; sub: string; icon?: string }[] }> = {
   Products: {
     desc: "Five purpose-built software platforms for enterprise and government.",
     items: [
@@ -32,27 +32,27 @@ const NAV_DROPDOWNS: Record<string, { desc: string; items: { name: string; sub: 
   Research: {
     desc: "Innovation-driven research powering tomorrow's solutions.",
     items: [
-      { name: "Innovation Lab",   sub: "R&D and rapid prototyping" },
-      { name: "Publications",     sub: "White papers & reports" },
-      { name: "R&D Partnerships", sub: "Academic and industry" },
+      { name: "Innovation Lab",    sub: "R&D and rapid prototyping" },
+      { name: "Publications",      sub: "White papers & reports" },
+      { name: "R&D Partnerships",  sub: "Academic and industry" },
     ],
   },
   "MGX Campus": {
     desc: "Building Africa's next generation of digital leaders.",
     items: [
-      { name: "Training Programs", sub: "Professional development" },
-      { name: "Bootcamps",         sub: "Intensive skill-building" },
-      { name: "Certifications",    sub: "Industry credentials" },
-      { name: "Innovation Hub",    sub: "Incubation & mentorship" },
+      { name: "Training Programs", sub: "Professional development",  icon: "school" },
+      { name: "Bootcamps",         sub: "Intensive skill-building",  icon: "fitness_center" },
+      { name: "Certifications",    sub: "Industry credentials",      icon: "verified" },
+      { name: "Innovation Hub",    sub: "Incubation & mentorship",   icon: "hub" },
     ],
   },
   Company: {
     desc: "Learn about our story, team, and mission.",
     items: [
-      { name: "About MGX",    sub: "Our story and vision" },
-      { name: "Team",         sub: "The people behind MGX" },
-      { name: "Careers",      sub: "Join our growing team" },
-      { name: "News & Press", sub: "Latest announcements" },
+      { name: "About MGX",    sub: "Our story and vision",   icon: "info" },
+      { name: "Team",         sub: "The people behind MGX",  icon: "group" },
+      { name: "Careers",      sub: "Join our growing team",  icon: "work" },
+      { name: "News & Press", sub: "Latest announcements",   icon: "newspaper" },
     ],
   },
 }
@@ -280,17 +280,19 @@ export default function Hero() {
             </button>
             <button
               onClick={() => scrollTo("services")}
-              className="flex items-center gap-2 cursor-pointer transition-all duration-200 hover:-translate-y-px"
+              className="flex items-center gap-2 cursor-pointer"
               style={{
                 padding: "8px 18px",
-                background: "rgba(255,255,255,0.12)",
-                backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)",
-                border: "1px solid rgba(255,255,255,0.18)",
-                boxShadow: "0 1px 2px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.14)",
-                color: "white", fontSize: 14, fontWeight: 500, borderRadius: "100px",
+                background: "white",
+                border: "1px solid white",
+                boxShadow: "0 2px 12px rgba(0,0,0,0.3)",
+                color: "#0a0a0a", fontSize: 14, fontWeight: 600, borderRadius: "100px",
+                transition: "opacity 0.18s ease, transform 0.18s ease",
               }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.opacity = "0.88" }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.opacity = "1" }}
             >
-              <ArrowIcon size={13} color="white" /> Get Started
+              <ArrowIcon size={13} color="#0a0a0a" /> Get Started
             </button>
           </div>
         )}
@@ -351,41 +353,83 @@ export default function Hero() {
                 </p>
               </div>
 
-              {/* Right: items grid */}
-              <div style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: "0.2rem 0.75rem",
-                alignContent: "start",
-              }}>
-                {NAV_DROPDOWNS[openDropdown].items.map((link) => (
-                  <button
-                    key={link.name}
-                    style={{
-                      display: "flex", flexDirection: "column", gap: "0.22rem",
-                      textAlign: "left", padding: "0.65rem 0.8rem",
-                      borderRadius: 11, cursor: "pointer",
-                      background: "transparent", border: "none",
-                      transition: "background 0.14s ease",
-                    }}
-                    onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.07)" }}
-                    onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "transparent" }}
-                  >
-                    <span style={{
-                      fontFamily: FF, fontSize: "0.875rem", fontWeight: 550,
-                      color: "rgba(255,255,255,0.92)", letterSpacing: "-0.01em",
-                    }}>
-                      {link.name}
-                    </span>
-                    <span style={{
-                      fontFamily: FF, fontSize: "0.77rem", fontWeight: 350,
-                      color: "rgba(255,255,255,0.38)", lineHeight: 1.4,
-                    }}>
-                      {link.sub}
-                    </span>
-                  </button>
-                ))}
-              </div>
+              {/* Right: items */}
+              {NAV_DROPDOWNS[openDropdown].items.some(i => i.icon) ? (
+                /* Bordered card layout for icon-bearing sections */
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.35rem" }}>
+                  {NAV_DROPDOWNS[openDropdown].items.map((link) => (
+                    <button
+                      key={link.name}
+                      style={{
+                        display: "flex", alignItems: "center", gap: "0.85rem",
+                        textAlign: "left", padding: "0.7rem 0.9rem",
+                        borderRadius: 12, cursor: "pointer",
+                        background: "transparent",
+                        border: "1px solid rgba(255,255,255,0.1)",
+                        transition: "background 0.14s ease, border-color 0.14s ease",
+                      }}
+                      onMouseEnter={(e) => {
+                        const el = e.currentTarget as HTMLElement
+                        el.style.background = "rgba(255,255,255,0.07)"
+                        el.style.borderColor = "rgba(255,255,255,0.2)"
+                      }}
+                      onMouseLeave={(e) => {
+                        const el = e.currentTarget as HTMLElement
+                        el.style.background = "transparent"
+                        el.style.borderColor = "rgba(255,255,255,0.1)"
+                      }}
+                    >
+                      {link.icon && (
+                        <span className="material-symbols-outlined" style={{
+                          fontSize: "1.1rem", color: "rgba(255,255,255,0.55)", flexShrink: 0,
+                        }}>{link.icon}</span>
+                      )}
+                      <div>
+                        <div style={{
+                          fontFamily: FF, fontSize: "0.875rem", fontWeight: 550,
+                          color: "rgba(255,255,255,0.92)", letterSpacing: "-0.01em",
+                        }}>{link.name}</div>
+                        <div style={{
+                          fontFamily: FF, fontSize: "0.77rem", fontWeight: 350,
+                          color: "rgba(255,255,255,0.38)", lineHeight: 1.4,
+                        }}>{link.sub}</div>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              ) : (
+                /* Standard 2-col grid for other sections */
+                <div style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr 1fr",
+                  gap: "0.2rem 0.75rem",
+                  alignContent: "start",
+                }}>
+                  {NAV_DROPDOWNS[openDropdown].items.map((link) => (
+                    <button
+                      key={link.name}
+                      style={{
+                        display: "flex", flexDirection: "column", gap: "0.22rem",
+                        textAlign: "left", padding: "0.65rem 0.8rem",
+                        borderRadius: 11, cursor: "pointer",
+                        background: "transparent", border: "none",
+                        transition: "background 0.14s ease",
+                      }}
+                      onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.07)" }}
+                      onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "transparent" }}
+                    >
+                      <span style={{
+                        fontFamily: FF, fontSize: "0.875rem", fontWeight: 550,
+                        color: "rgba(255,255,255,0.92)", letterSpacing: "-0.01em",
+                      }}>{link.name}</span>
+                      <span style={{
+                        fontFamily: FF, fontSize: "0.77rem", fontWeight: 350,
+                        color: "rgba(255,255,255,0.38)", lineHeight: 1.4,
+                      }}>{link.sub}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         )}
@@ -541,34 +585,60 @@ export default function Hero() {
           transform: showButtons ? "none" : "translateY(16px)",
           transition: "opacity 0.5s ease, transform 0.5s ease",
         }}>
+          {/* Primary CTA — solid white, high contrast */}
           <button
             onClick={() => scrollTo("services")}
             style={{
               display: "flex", alignItems: "center", justifyContent: "center", gap: "0.6rem",
-              padding: isMobile ? "13px 0" : "14px 26px",
+              padding: isMobile ? "13px 0" : "14px 28px",
               width: isMobile ? "100%" : "auto",
-              background: "rgba(255,255,255,0.14)",
-              backdropFilter: "blur(24px)", WebkitBackdropFilter: "blur(24px)",
-              border: "1px solid rgba(255,255,255,0.22)",
-              boxShadow: "0 1px 3px rgba(0,0,0,0.24),inset 0 1px 0 rgba(255,255,255,0.16)",
-              color: "white", fontSize: isMobile ? "0.9rem" : 15, fontWeight: 500,
+              background: "white",
+              border: "1px solid white",
+              boxShadow: "0 4px 20px rgba(0,0,0,0.35)",
+              color: "#0a0a0a", fontSize: isMobile ? "0.9rem" : 15, fontWeight: 600,
               borderRadius: "100px", cursor: "pointer",
-              transition: "transform 0.2s ease",
+              transition: "opacity 0.18s ease, transform 0.18s ease",
+            }}
+            onMouseEnter={(e) => {
+              const el = e.currentTarget as HTMLElement
+              el.style.opacity = "0.88"
+              el.style.transform = "translateY(-1px)"
+            }}
+            onMouseLeave={(e) => {
+              const el = e.currentTarget as HTMLElement
+              el.style.opacity = "1"
+              el.style.transform = "translateY(0)"
             }}
           >
-            <ArrowIcon size={14} color="white" /> Explore Our Solutions
+            <ArrowIcon size={14} color="#0a0a0a" /> Explore Our Solutions
           </button>
+
+          {/* Secondary CTA — strong glass outline */}
           <button
             onClick={() => scrollTo("products")}
             style={{
               display: "flex", alignItems: "center", justifyContent: "center", gap: "0.6rem",
-              padding: isMobile ? "13px 0" : "14px 26px",
+              padding: isMobile ? "13px 0" : "14px 28px",
               width: isMobile ? "100%" : "auto",
-              background: "transparent",
-              backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)",
-              border: "1px solid rgba(255,255,255,0.18)",
-              color: "rgba(255,255,255,0.85)", fontSize: isMobile ? "0.9rem" : 15, fontWeight: 450,
+              background: "rgba(255,255,255,0.1)",
+              backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)",
+              border: "1px solid rgba(255,255,255,0.35)",
+              boxShadow: "inset 0 1px 0 rgba(255,255,255,0.15)",
+              color: "white", fontSize: isMobile ? "0.9rem" : 15, fontWeight: 500,
               borderRadius: "100px", cursor: "pointer",
+              transition: "background 0.18s ease, border-color 0.18s ease, transform 0.18s ease",
+            }}
+            onMouseEnter={(e) => {
+              const el = e.currentTarget as HTMLElement
+              el.style.background = "rgba(255,255,255,0.18)"
+              el.style.borderColor = "rgba(255,255,255,0.55)"
+              el.style.transform = "translateY(-1px)"
+            }}
+            onMouseLeave={(e) => {
+              const el = e.currentTarget as HTMLElement
+              el.style.background = "rgba(255,255,255,0.1)"
+              el.style.borderColor = "rgba(255,255,255,0.35)"
+              el.style.transform = "translateY(0)"
             }}
           >
             <GridIcon /> View Our Products

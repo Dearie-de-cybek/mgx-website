@@ -22,12 +22,6 @@
   animation: ring-ripple 4s linear infinite, ring-expand 8s ease-in-out infinite alternate;
 }
 
-/* ── Icon wobble (Services grid) ── */
-@keyframes wobble {
-  from { translate: 0 60%; }
-  to   { translate: 0 -60%; }
-}
-
 /* ── Shared animations ── */
 @keyframes float {
   0%, 100% { transform: translateY(0px); }

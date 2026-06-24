@@ -4,14 +4,6 @@ import { useIsMobile } from "@/hooks/useIsMobile"
 
 const FF = "'Google Sans Flex','Google Sans',system-ui,sans-serif"
 
-const PRODUCTS = [
-  { name: "H360",               tagline: "Intelligent 360° Operations Hub" },
-  { name: "GOVDIGI",            tagline: "Government Digital Services Platform" },
-  { name: "TRUSTPORT IDENTITY", tagline: "Digital Identity & Trust Management" },
-  { name: "E-TRACK",            tagline: "Real-time Asset & Fleet Tracking" },
-  { name: "NEARFENCE",          tagline: "Geofencing & Location Intelligence" },
-]
-
 export default function Products() {
   const isMobile = useIsMobile()
   const px = isMobile ? "1.5rem" : "7rem"
@@ -23,17 +15,6 @@ export default function Products() {
       paddingBottom: isMobile ? "3rem" : "6rem",
       borderTop: "1px solid rgba(33,34,38,0.06)",
     }}>
-      <style>{`
-        @keyframes marquee {
-          from { transform: translateX(0); }
-          to   { transform: translateX(-33.333%); }
-        }
-        @keyframes pulseDot {
-          0%, 100% { box-shadow: 0 0 0 0 rgba(239,68,68,0.5); }
-          50%       { box-shadow: 0 0 0 6px rgba(239,68,68,0); }
-        }
-      `}</style>
-
       {/* Header */}
       <div style={{
         display: "flex",

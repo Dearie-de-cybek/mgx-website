@@ -8,7 +8,6 @@ const FF = "'Google Sans Flex','Google Sans',system-ui,sans-serif"
 
 function TypewriterText({ text }: { text: string }) {
   const ref     = useRef<HTMLParagraphElement>(null)
-  const started = useRef(false)
   const [count, setCount] = useState(0)
   const [inView, setInView] = useState(false)
 
@@ -21,8 +20,7 @@ function TypewriterText({ text }: { text: string }) {
   }, [])
 
   useEffect(() => {
-    if (!inView || started.current) return
-    started.current = true
+    if (!inView) return
     let n = 0
     const iv = setInterval(() => { n++; setCount(n); if (n >= text.length) clearInterval(iv) }, 38)
     return () => clearInterval(iv)

@@ -15,52 +15,52 @@ const ICONS = [
 
 const SERVICES = [
   {
-    icon: "smart_toy",
-    color: "#1a73e8",
     title: "Artificial Intelligence & Machine Learning",
     desc: "AI systems, intelligent automation, predictive analytics, computer vision, and data-driven decision platforms.",
+    img: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=640&h=500&fit=crop&q=90",
+    featured: false,
   },
   {
-    icon: "security",
-    color: "#e91e8c",
     title: "Cybersecurity & Threat Intelligence",
     desc: "Security assessments, vulnerability research, threat monitoring, incident response, and digital protection.",
+    img: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=640&h=500&fit=crop&q=90",
+    featured: true,
   },
   {
-    icon: "code",
-    color: "#ff6d2a",
     title: "Software Development & Digital Platforms",
     desc: "Custom web, mobile, and enterprise software — from concept and design through deployment and maintenance.",
+    img: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=640&h=500&fit=crop&q=90",
+    featured: false,
   },
   {
-    icon: "account_balance",
-    color: "#0d9488",
     title: "Government Technology Solutions",
     desc: "E-government platforms, digital records, citizen services, GIS systems, and public sector modernization.",
+    img: "https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=640&h=500&fit=crop&q=90",
+    featured: false,
   },
   {
-    icon: "monitor_heart",
-    color: "#dc2626",
     title: "Health Technology Solutions",
     desc: "Electronic health records, healthcare workflow platforms, health data management, and clinical systems.",
+    img: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=640&h=500&fit=crop&q=90",
+    featured: false,
   },
   {
-    icon: "location_city",
-    color: "#7c3aed",
     title: "Smart Cities & Urban Technology",
     desc: "IoT systems, urban intelligence platforms, infrastructure monitoring, smart mobility, and city data.",
+    img: "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=640&h=500&fit=crop&q=90",
+    featured: false,
   },
   {
-    icon: "science",
-    color: "#059669",
     title: "Research & Innovation Development",
     desc: "Technology research, feasibility studies, prototypes, R&D partnerships, and turning ideas into products.",
+    img: "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=640&h=500&fit=crop&q=90",
+    featured: false,
   },
   {
-    icon: "school",
-    color: "#d97706",
     title: "Technology Training & Workforce Development",
     desc: "Professional training, certification programs, bootcamps, and talent development through MGX Campus.",
+    img: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=640&h=500&fit=crop&q=90",
+    featured: false,
   },
 ]
 
@@ -79,15 +79,13 @@ function useInView(ref: React.RefObject<Element | null>, threshold = 0.15) {
 }
 
 function TypewriterH2({ text }: { text: string }) {
-  const ref     = useRef<HTMLHeadingElement>(null)
-  const started = useRef(false)
+  const ref      = useRef<HTMLHeadingElement>(null)
   const [count, setCount] = useState(0)
-  const inView  = useInView(ref as React.RefObject<Element>, 0.2)
+  const inView   = useInView(ref as React.RefObject<Element>, 0.2)
   const isMobile = useIsMobile()
 
   useEffect(() => {
-    if (!inView || started.current) return
-    started.current = true
+    if (!inView) return
     let n = 0
     const iv = setInterval(() => { n++; setCount(n); if (n >= text.length) clearInterval(iv) }, 28)
     return () => clearInterval(iv)
@@ -109,106 +107,16 @@ function TypewriterH2({ text }: { text: string }) {
   )
 }
 
-function ServiceCard({ s, i, isMobile }: { s: typeof SERVICES[0]; i: number; isMobile: boolean }) {
-  const ref     = useRef<HTMLDivElement>(null)
-  const visible = useInView(ref as React.RefObject<Element>, 0.12)
-  const [hovered, setHovered] = useState(false)
-
-  return (
-    <div
-      ref={ref}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      style={{
-        borderRadius: 16,
-        border: `1px solid ${s.color}28`,
-        padding: "1.75rem 1.6rem 2rem",
-        background: hovered
-          ? `linear-gradient(145deg, ${s.color}22 0%, ${s.color}0a 100%)`
-          : `linear-gradient(145deg, ${s.color}12 0%, ${s.color}04 100%)`,
-        display: "flex", flexDirection: "column", gap: "1rem",
-        cursor: "default",
-        boxShadow: hovered ? `0 8px 32px ${s.color}22` : `0 2px 12px ${s.color}0e`,
-        transition: "background 0.28s ease, box-shadow 0.28s ease, opacity 0.5s ease, transform 0.5s ease",
-        opacity: isMobile ? (visible ? 1 : 0) : 1,
-        transform: isMobile
-          ? visible ? "translateY(0) scale(1)" : "translateY(36px) scale(0.97)"
-          : "none",
-        transitionDelay: isMobile ? `${i * 0.07}s` : "0s",
-      }}
-    >
-      {/* Large icon */}
-      <span className="material-symbols-outlined" style={{
-        fontSize: "3rem",
-        color: s.color,
-        lineHeight: 1,
-        display: "inline-block",
-        animation: `iconFloat 3.5s ease-in-out infinite`,
-        animationDelay: `${i * 0.38}s`,
-      }}>{s.icon}</span>
-
-      <h3 style={{
-        fontFamily: FF,
-        fontSize: "1.05rem", fontWeight: 600,
-        lineHeight: 1.3, letterSpacing: "-0.015em",
-        color: "#121317", margin: 0,
-      }}>
-        {s.title}
-      </h3>
-
-      <p style={{
-        fontFamily: FF,
-        fontSize: "1rem", fontWeight: 350,
-        lineHeight: 1.65, color: "#45474d",
-        margin: 0, flex: 1,
-      }}>
-        {s.desc}
-      </p>
-
-      <button style={{
-        display: "inline-flex", alignItems: "center", gap: "0.4em",
-        marginTop: "0.25rem",
-        padding: "0.55em 1.1em",
-        borderRadius: "999px",
-        border: `1px solid ${s.color}40`,
-        background: `${s.color}12`,
-        color: s.color,
-        fontFamily: FF, fontSize: "0.9rem", fontWeight: 550,
-        cursor: "pointer",
-        transition: "background 0.18s ease, border-color 0.18s ease",
-        alignSelf: "flex-start",
-      }}
-        onMouseEnter={(e) => {
-          const el = e.currentTarget as HTMLElement
-          el.style.background = `${s.color}22`
-          el.style.borderColor = `${s.color}70`
-        }}
-        onMouseLeave={(e) => {
-          const el = e.currentTarget as HTMLElement
-          el.style.background = `${s.color}12`
-          el.style.borderColor = `${s.color}40`
-        }}
-      >
-        Read more
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden>
-          <path d="M2 6h8m0 0L7 3m3 3L7 9" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
-      </button>
-    </div>
-  )
-}
-
 export default function Services() {
   const isMobile = useIsMobile()
-  const px = isMobile ? "1.5rem" : "9rem"
+  const px       = isMobile ? "1.5rem" : "5rem"
 
   return (
     <section id="services" style={{ fontFamily: FF, paddingTop: isMobile ? "4rem" : "7rem", paddingBottom: "2rem" }}>
-
       <style>{`
-        @keyframes iconFloat {
+        @keyframes wobble {
           0%, 100% { transform: translateY(0px); }
-          50%       { transform: translateY(-6px); }
+          50%       { transform: translateY(-8px); }
         }
       `}</style>
 
@@ -242,20 +150,80 @@ export default function Services() {
 
       <TypewriterH2 text="MGX builds intelligent technology platforms for enterprises and governments at scale." />
 
-      {/* Service cards */}
+      {/* 4-column grid — 2 rows of 4 */}
       <div style={{
-        padding: `2.5rem ${px}`,
         display: "grid",
-        gridTemplateColumns: isMobile ? "1fr" : "repeat(4, 1fr)",
-        gap: isMobile ? "1.5rem" : "1rem",
-        marginTop: "2rem",
+        gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4, 1fr)",
+        gap: isMobile ? "1rem" : "2rem",
+        padding: isMobile ? `2.5rem ${px} 0` : "2.5rem 8rem 0",
       }}>
-        {SERVICES.map((s, i) => (
-          <ServiceCard key={s.title} s={s} i={i} isMobile={isMobile} />
-        ))}
+        {SERVICES.map((s) => {
+          const bg = s.featured ? "#1a73e8" : "#0c0c14"
+          const grad = s.featured
+            ? "linear-gradient(to bottom, #1a73e8 18%, rgba(26,115,232,0.88) 45%, transparent 74%)"
+            : "linear-gradient(to bottom, #0c0c14 18%, rgba(12,12,20,0.88) 45%, transparent 74%)"
+
+          return (
+            <div
+              key={s.title}
+              style={{
+                height: isMobile ? 300 : 440,
+                borderRadius: isMobile ? 14 : 18,
+                background: bg,
+                position: "relative",
+                overflow: "hidden",
+              }}
+            >
+              {/* Photo — bottom portion */}
+              <img
+                src={s.img}
+                alt=""
+                loading="lazy"
+                style={{
+                  position: "absolute", bottom: 0, left: 0,
+                  width: "100%", height: "60%",
+                  objectFit: "cover", objectPosition: "center top",
+                  zIndex: 0,
+                }}
+              />
+
+              {/* Gradient — solid top fading to reveal photo */}
+              <div style={{
+                position: "absolute", inset: 0,
+                background: grad,
+                zIndex: 1, pointerEvents: "none",
+              }} />
+
+              {/* Text */}
+              <div style={{
+                position: "relative", zIndex: 2,
+                padding: isMobile ? "1.25rem 1rem" : "1.5rem 1.4rem",
+                display: "flex", flexDirection: "column", gap: "0.5rem",
+              }}>
+                <h3 style={{
+                  fontFamily: FF,
+                  fontSize: isMobile ? "0.9rem" : "1rem",
+                  fontWeight: 650, lineHeight: 1.25,
+                  color: "white", margin: 0, letterSpacing: "-0.015em",
+                }}>
+                  {s.title}
+                </h3>
+                <p style={{
+                  fontFamily: FF,
+                  fontSize: isMobile ? "0.75rem" : "0.82rem",
+                  fontWeight: 350,
+                  color: s.featured ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.5)",
+                  lineHeight: 1.6, margin: 0,
+                }}>
+                  {s.desc}
+                </p>
+              </div>
+            </div>
+          )
+        })}
       </div>
 
-      <div style={{ margin: `3rem ${px} 0`, height: 1, background: "rgba(33,34,38,0.06)" }} />
+      <div style={{ margin: isMobile ? `3rem ${px} 0` : "3rem 8rem 0", height: 1, background: "rgba(33,34,38,0.06)" }} />
     </section>
   )
 }
